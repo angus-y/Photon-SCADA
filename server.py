@@ -16,7 +16,7 @@ username = username.encode()
 password = password.encode()
 
 # init flask server
-app = Flask(__name__, static_url_path='/static')
+app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 
@@ -36,6 +36,9 @@ def login():
         if bcrypt.checkpw(username_inp, username) and bcrypt.checkpw(password_inp, password):
             session['user'] = request.form['username']
             return redirect(url_for('dashboard'))
+        else:
+            print ("\x1b[1m\x1b[33m[-]\x1b[0mDetected incorrect login")
+            return render_template('login_failed.html')
     return render_template('login.html')
 
 

@@ -1,0 +1,50 @@
+@font-face {
+  font-family: "Gotham Medium";
+  src: url("/fonts/Gotham-Medium.ttf") format("otf");
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: url(static/images/background.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+.main-section {
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 0;
+}
+.modal-content {
+    margin-top: 200px;
+    background-color: #201F32;
+    opacity: .90;
+    padding: 0 18px;
+    zoom: 1.2;
+    border-radius: 18px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.user-img{
+    margin-top: -50px;
+    margin-bottom: 35px;
+}
+.title{
+    margin-top: 50px;
+    font-family: 'Gotham Medium';
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 55px;
+
+}
+.form-group-user{
+    margin-bottom: 30px;
+}
+.form-group-pass{
+    margin-bottom: 30px;
+}
+.btn{
+    margin-bottom: 50px;
+    height: 40px;
+    width: 150px;
+}
+.alert alert-warning alert-dismissible fade show{
+    bottom: 0px;
+}
