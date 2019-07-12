@@ -45,7 +45,7 @@ def login():
 @app.route('/dashboard')
 def dashboard():
     if g.user:
-        return render_template('dashboard.html')
+        return render_template('index.html')
     return redirect(url_for('login'))
 
 
