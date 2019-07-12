@@ -1,17 +1,21 @@
 import os
+import threading
 import bcrypt
-import blynklib
 import colorama
+import modules.blynk_stream_retrieve as blynk_stream_retrieve
+import modules.config as config
 from flask import Flask, session, render_template, redirect, url_for, request, g
 
-auth_token = ''
-blynk = blynklib.Blynk(auth_token)
+config.main()
+
+# init hashes and color output
 colorama.init()
 with open('creds.txt', 'r') as f:
     username, password = f.read().split('\n')  # user : angus, pass : flaskbiggae
 username = username.encode()
 password = password.encode()
 
+# init flask server
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = os.urandom(24)
 
@@ -50,4 +54,9 @@ def before_request():
 
 
 if __name__ == '__main__':
+    # init data blynk streaming
+    t = threading.Thread(target=blynk_stream_retrieve.main, args=())
+    t.start()
+    print('\x1b[1m\x1b[32m[+]\x1b[0mStarted Blynk data streamer')
+
     app.run(debug=True, host='0.0.0.0')
