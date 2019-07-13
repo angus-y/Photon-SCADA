@@ -27,7 +27,8 @@ body {
     margin-bottom: 35px;
 }
 .title{
-    margin-top: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     font-family: 'Gotham Medium';
     color: #FFFFFF;
     text-align: center;
@@ -47,4 +48,9 @@ body {
 }
 .alert alert-warning alert-dismissible fade show{
     bottom: 0px;
+}
+
+#gae2
+{
+    display: none;
 }

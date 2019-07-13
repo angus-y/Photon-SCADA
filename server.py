@@ -3,6 +3,7 @@ import threading
 import bcrypt
 import colorama
 import modules.blynk_stream_retrieve as blynk_stream_retrieve
+import modules.send_data as send_data
 import modules.config as config
 from flask import Flask, session, render_template, redirect, url_for, request, g
 
@@ -18,6 +19,8 @@ password = password.encode()
 # init flask server
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+
+
 
 
 @app.route('/')
@@ -42,10 +45,19 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET','POST'])
 def dashboard():
     if g.user:
+        if request.method == 'POST':
+            data = request.form.getlist('manual-auto-toggle')
         return render_template('index.html')
+    return redirect(url_for('login'))
+
+
+@app.route('/logout')
+def logout():
+    if session:
+        session.pop('user')
     return redirect(url_for('login'))
 
 

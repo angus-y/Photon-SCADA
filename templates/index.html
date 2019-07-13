@@ -5,126 +5,117 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - Brand</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome-all.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/dashy.css') }}" >
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="static/js/plotly.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+        .toggle.ios .toggle-handle { border-radius: 20px; }
+    </style>
 </head>
 
 <body id="page-top">
-    <div id="wrapper">
+    <div id="wrapper" class="navvie">
+
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
-                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-lightbulb"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>Photon</span></div>
-                </a>
+                 <div class="title">
+                     <p>P H O T O N</p>
+                 </div>
+                <img src="static/images/logo.png" height="200px" width="200px"/>
                 <hr class="sidebar-divider my-0">
+                <p id="man_auto_label">AUTO</p>
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="index.html"><i class="fas fa-sign-out-alt"></i><span>Log Out</span></a></li>
+                <label class="switch" id="fuckyouall">
+                    <input type="checkbox" onclick="hi()" id="man_auto">
+                    <span class="slider round"></span>
+                </label>
+                <p id="relay_switching_label">&nbsp;SOLAR</p>
+                <label class="switch" id="oofyouall">
+                    <input type="checkbox" onclick="hi2 ()" id="relay">
+                    <span class="slider round"></span>
+                </label>
+                <script>
+                    function hi()
+                    {
+                        console.log(document.getElementById("man_auto").checked);
+                        var oof = document.getElementById("man_auto").checked;
+                        if (oof)
+                        {
+                            //manual ON
+                            //SOLAR
+                            document.getElementById("man_auto_label").innerHTML = "MANUAL";
+                            document.getElementById("relay").disabled = false;
+                            console.log(document.getElementById("relay").disabled)
+                            document.getElementById("relay_switching_label").innerHTML = "&nbsp;SOLAR";
+                            var req = new XMLHttpRequest();
+                            req.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/update/V8?value=1');
+                            req.send();
+                            req = new XMLHttpRequest();
+                            req.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/update/V10?value=0');
+
+                            req.send();
+                        }
+                        else
+                        {
+                            //manual OFF
+                            document.getElementById("man_auto_label").innerHTML = "AUTO";
+                            console.log(2);
+                            document.getElementById("relay").checked = false;
+                            document.getElementById("relay").disabled = true;
+                            document.getElementById("relay_switching_label").innerHTML = "&nbsp;SOLAR";
+                            console.log(document.getElementById("relay").disabled)
+                            req2 = new XMLHttpRequest();
+                            req2.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/update/V8?value=0');
+
+                            req2.send()
+                            var req3 = new XMLHttpRequest();
+                            req3.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/update/V10?value=0');
+
+                            req3.send()
+                        }
+
+                    }
+                    function hi2()
+                    {
+                        console.log(document.getElementById("relay").checked);
+                        var oof = document.getElementById("relay").checked;
+                        if (oof)
+                        {
+                            //BATTERY
+                            document.getElementById("relay_switching_label").innerHTML = "BATTERY";
+                            var req1 = new XMLHttpRequest();
+                            req1.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/update/V10?value=1');
+
+                            req1.send()
+
+                        }
+                        else
+                        {
+                            //SOLAR
+                            document.getElementById("relay_switching_label").innerHTML = "&nbsp;SOLAR";
+                            req = new XMLHttpRequest();
+                            req.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/update/V10?value=0');
+
+                            req.send()
+
+                        }
+                    }
+                </script>
+
+                <a class="nav-link active" href="/logout" style="margin-top: 100px;"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
-                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"></div>
-                        </form>
-                        <ul class="nav navbar-nav flex-nowrap ml-auto">
-                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto navbar-search w-100">
-                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1" role="presentation">
-                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
-                                        role="menu">
-                                        <h6 class="dropdown-header">alerts center</h6>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div>
-                                </li>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1" role="presentation">
-                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-envelope fa-fw"></i><span class="badge badge-danger badge-counter">7</span></a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
-                                        role="menu">
-                                        <h6 class="dropdown-header">alerts center</h6>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div>
-                                </li>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
-                            </li>
-                            <div class="d-none d-sm-block topbar-divider"></div>
-                            <li class="nav-item dropdown no-arrow" role="presentation"></li>
-                        </ul>
-                    </div>
-                </nav>
-                <div class="container-fluid">
+                <div class="container-fluid" style="margin-top: 100px;">
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 class="text-dark mb-0">Dashboard</h3>
                     </div>
@@ -157,22 +148,145 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-7 col-xl-11 offset-xl-1">
-                            <div class="card shadow mb-4">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h6 class="text-primary font-weight-bold m-0">Earnings Overview</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-area"><canvas data-bs-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
-                                </div>
+                        <div class="col-lg-8 col-xl-10 offset-xl-1">
+                            <div class="card-header">
+                                <h6 class="text-primary font-weight-bold m-1">Solar output</h6>
                             </div>
                         </div>
+                                <div class="wrapper col-lg-8 col-xl-10 offset-xl-1">
+                                    <div class="realtime-graph" id="chart"></div>
+                                    <script>
+                                        let number = 0;
+                                        const solarGen = document.getElementById('solarGen')
+                                        var request1 = new XMLHttpRequest();
+                                        setInterval(function()
+                                        {
+                                            request1.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/get/V7');
+
+                                            request1.onreadystatechange = function ()
+                                            {
+                                                if (this.readyState === 4)
+                                                {
+                                                    solarGen.innerHTML = parseFloat(Number(JSON.parse(this.responseText)).toFixed(3)) + ' V'
+                                                    number = parseFloat(Number(JSON.parse(this.responseText)).toFixed(3));
+                                                }
+                                            };
+
+                                            request1.send();
+                                        }, 200);
+
+                                        function getData()
+                                        {
+                                            return number;
+                                        }
+                                        var layout = {
+                                            xaxis:
+                                            {
+                                                //showgrid: false
+                                                //color: white;
+                                            }
+
+
+
+                                        }
+                                        Plotly.plot('chart',
+                                        [
+                                            {
+                                                y:[getData()],
+                                                type:'line'
+                                            }
+                                        ],  layout,  {showSendToCloud: true});
+
+
+                                        var cnt = 0;
+                                        setInterval(function()
+                                        {
+
+
+                                            Plotly.extendTraces('chart',{ y:[[getData()]]}, [0]);
+                                            cnt++;
+                                            if(cnt > 00)
+                                            {
+                                                Plotly.relayout('chart',
+                                                {
+                                                    xaxis:
+                                                    {
+                                                        range: [cnt - 500,cnt],
+                                                        showgrid:false,
+                                                        title: {
+                                                        text: 'x Axis',
+                                                        font:
+                                                        {
+                                                            family: 'Courier New, monospace',
+                                                            size: 18,
+                                                            color: '#FFFFFF'
+                                                        }
+
+    },
+                                                    },
+                                                    yaxis:
+                                                    {
+
+                                                        showgrid: false
+
+                                                    }
+
+
+
+                                                });
+
+                                            }
+                                        },15);
+
+
+                                    </script>
+                                </div>
+                            </div>
+
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
+            <script>
+                var request3 = new XMLHttpRequest();
+                var state;
+                setInterval(function()
+                 {
+
+                      request3.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/get/V12');
+                      request3.onreadystatechange = function ()
+                      {
+                           if (this.readyState === 4)
+                           {
+
+                                state = JSON.parse(this.responseText)[0];
+
+                           }
+                      };
+                      request3.send();
+                      console.log(state)
+                      if (document.getElementById("man_auto_label").innerHTML == "AUTO")
+                      {
+
+                          if (state == 'Solar')
+                          {
+                              console.log("wubba ");
+                              document.getElementById("relay_switching_label").innerHTML = "&nbsp;SOLAR";
+                              document.getElementById("relay").checked = false;
+                          }
+                          else if (state == ["Battery"])
+                          {
+                              document.getElementById("relay_switching_label").innerHTML = "BATTERY";
+                              document.getElementById("relay").checked = true;
+                          }
+                      }
+                 }, 500);
+
+
+           </script>
+           <footer class="bg-white sticky-footer">
+                <br/><br/><br/><br/>
                 <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Aurora 2019</span></div>
+                    <div class="text-center my-auto copyright" style="margin-left: 160px;"><span>Copyright © Aurora 2019</span></div>
                 </div>
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
@@ -182,23 +296,8 @@
     <script src="{{ url_for('static', filename='js/bs-chart.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>
-        const solarGen = document.getElementById('solarGen')
-        var request1 = new XMLHttpRequest();
-        setInterval(function() {
-          request1.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/get/V7');
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>chart
 
-          request1.onreadystatechange = function () {
-            if (this.readyState === 4) {
-              solarGen.innerHTML = parseFloat(Number(JSON.parse(this.responseText)).toFixed(3)) + ' V'
-            }
-          };
-
-          request1.send();
-        }, 200);
-
-    </script>
     <script>
       const batteryPer = document.getElementById('batteryPer')
       var request2 = new XMLHttpRequest();
@@ -207,11 +306,9 @@
 
         request2.onreadystatechange = function () {
           if (this.readyState === 4) {
-            console.log(this.responseText)
             batteryPer.innerHTML = JSON.parse(this.responseText) + ' %'
           }
         };
-
         request2.send();
       }, 200);
     </script>
