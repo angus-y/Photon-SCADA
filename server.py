@@ -1,13 +1,8 @@
 import os
-import threading
 import bcrypt
 import colorama
-import modules.blynk_stream_retrieve as blynk_stream_retrieve
-import modules.send_data as send_data
-import modules.config as config
 from flask import Flask, session, render_template, redirect, url_for, request, g
 
-config.main()
 
 # init hashes and color output
 colorama.init()
@@ -69,9 +64,4 @@ def before_request():
 
 
 if __name__ == '__main__':
-    # init data blynk streaming
-    t = threading.Thread(target=blynk_stream_retrieve.main, args=())
-    t.start()
-    print('\x1b[1m\x1b[32m[+]\x1b[0mStarted Blynk data streamer')
-
     app.run(debug=True, host='0.0.0.0')
