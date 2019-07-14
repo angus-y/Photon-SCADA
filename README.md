@@ -4,5 +4,5 @@
 
 # The Photon Project
 
-A miniauture proof of concept smart grid built with a web SCADA system for dynamically storing solar energy when voltage output drops 
-below a certain threshold. Built for 2019's CXA hackathon competition
+A miniauture questionable coded proof of concept smart grid built with a web SCADA system using python 3 and flask for dynamically storing 
+solar energy when voltage output drops below a certain threshold. Built for 2019's CXA hackathon competition.
