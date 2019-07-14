@@ -35,7 +35,7 @@
                     <input type="checkbox" onclick="hi()" id="man_auto">
                     <span class="slider round"></span>
                 </label>
-                <p id="relay_switching_label">&nbsp;SOLAR</p>
+                <p id="relay_switching_label">&nbsp;&nbsp;SOLAR</p>
                 <label class="switch" id="oofyouall">
                     <input type="checkbox" onclick="hi2 ()" id="relay">
                     <span class="slider round"></span>
@@ -52,7 +52,7 @@
                             document.getElementById("man_auto_label").innerHTML = "MANUAL";
                             document.getElementById("relay").disabled = false;
                             console.log(document.getElementById("relay").disabled)
-                            document.getElementById("relay_switching_label").innerHTML = "&nbsp;SOLAR";
+                            document.getElementById("relay_switching_label").innerHTML = "&nbsp;&nbsp;SOLAR";
                             var req = new XMLHttpRequest();
                             req.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/update/V8?value=1');
                             req.send();
@@ -68,7 +68,7 @@
                             console.log(2);
                             document.getElementById("relay").checked = false;
                             document.getElementById("relay").disabled = true;
-                            document.getElementById("relay_switching_label").innerHTML = "&nbsp;SOLAR";
+                            document.getElementById("relay_switching_label").innerHTML = "&nbsp;&nbsp;SOLAR";
                             console.log(document.getElementById("relay").disabled)
                             req2 = new XMLHttpRequest();
                             req2.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/update/V8?value=0');
@@ -98,7 +98,7 @@
                         else
                         {
                             //SOLAR
-                            document.getElementById("relay_switching_label").innerHTML = "&nbsp;SOLAR";
+                            document.getElementById("relay_switching_label").innerHTML = "&nbsp;&nbsp;SOLAR";
                             req = new XMLHttpRequest();
                             req.open('GET', 'http://blynk-cloud.com/PibLh_9lhMCt_5fmc17ftsDfMWkqdx0S/update/V10?value=0');
 
@@ -270,7 +270,7 @@
                           if (state == 'Solar')
                           {
                               console.log("wubba ");
-                              document.getElementById("relay_switching_label").innerHTML = "&nbsp;SOLAR";
+                              document.getElementById("relay_switching_label").innerHTML = "&nbsp;&nbsp;SOLAR";
                               document.getElementById("relay").checked = false;
                           }
                           else if (state == ["Battery"])
