@@ -4,7 +4,9 @@
 
 # The Photon Project
 A miniauture questionably coded proof of concept smart grid built with a web SCADA system using python 3 and flask for dynamically storing 
-solar energy when voltage output drops below a certain threshold. Built for 2019's CXA hackathon competition.
+solar energy when voltage output drops below a certain threshold. Built for 2019's CXA hackathon competition. 
+<b>Please do not use anything in here at all/reference any code here its all garbage coffee fueled panic code</b>. 
+
 
 # Infrastructure
 A voltmeter monitors the output of a solar panel. The data is then streamed to Blynk where it is then pulled using python 3's urllib 
